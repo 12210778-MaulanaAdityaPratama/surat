@@ -11,13 +11,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">ZIP</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">NO</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Nip</th>
+                        <th scope="col">Pangkat/Gol. Ruang</th>
+                        <th scope="col">TMT Golongan</th>
+                        <th scope="col">Gaji Pokok(Rp)</th>
+                        <th scope="col">Kenaikan Pangkat</th>
+                        <th scope="col">Sekarang</th>
+                        <th scope="col">Akan Datang</th>
+                        <th scope="col">Kenaikan Gaji Berkala</th>
+                        <th scope="col">Sekarang</th>
+                        <th scope="col">Akan Datang</th>
+                        <th scope="col">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
