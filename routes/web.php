@@ -37,3 +37,6 @@ route::get('suratkeluar', function () {
 route::get('ktp', function () {
    return view('ktp'); 
 });
+route::get('pegawai', function () {
+   return view('pegawai'); 
+});
