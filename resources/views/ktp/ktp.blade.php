@@ -7,6 +7,7 @@
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
         <h6 class="mb-4">Responsive Table</h6>
+        <a href="{{ route('ktp.tambah_data') }}" class="btn btn-primary">Tambah Data</a>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -28,33 +29,26 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($ktp as $data)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>jhon@email.com</td>
-                        <td>USA</td>
-                        <td>123</td>
-                        <td>Member</td>
+                        <th scope="row">{{ $data->id }}</th>
+                        <td>{{ $data->no_ktp }}</td>
+                        <td>{{ $data->nama }}</td>
+                        <td>{{ $data->tempat_lahir }}</td>
+                        <td>{{ $data->tanggal_lahir }}</td>
+                        <td>{{ $data->jenis_kelamin }}</td>
+                        <td>{{ $data->alamat }}</td>
+                        <td>{{ $data->agama }}</td>
+                        <td>{{ $data->status_perkawinan }}</td>
+                        <td>{{ $data->pekerjaan }}</td>
+                        <td>{{ $data->kewarganegaraan }}</td>
+                        <td>{{ $data->tgl_pendaftaran }}</td>
+                        <td>{{ $data->status_pengambilan }}</td>
+                        <td>{{ $data->catatan }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mark@email.com</td>
-                        <td>UK</td>
-                        <td>456</td>
-                        <td>Member</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>jacob@email.com</td>
-                        <td>AU</td>
-                        <td>789</td>
-                        <td>Member</td>
-                    </tr>
+                    @endforeach
+                  
+                   
                 </tbody>
             </table>
         </div>
