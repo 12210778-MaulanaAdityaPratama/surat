@@ -14,4 +14,22 @@ class PegawaiController extends Controller
     public function tambah() {
         return view('pegawai.tambah');
     }
+    public function store(Request $request)
+    {
+        // Validasi data yang dikirimkan dari formulir
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'nip' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required',
+            'divisi' => 'required',
+            'jabatan' => 'required'
+        ]);
+    
+        // Simpan data ke dalam database menggunakan Eloquent Model
+        PegawaiModel::create($validatedData);
+    
+        // Redirect pengguna ke halaman yang sesuai
+        return redirect('/pegawai')->with('success', 'Data berhasil disimpan.');
+    }
 }

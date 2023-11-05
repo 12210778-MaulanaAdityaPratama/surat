@@ -23,9 +23,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $nomor = 1 @endphp
                     @foreach($pegawai as $data)
                     <tr>
-                        <th scope="row">{{ $data->id }}</th>
+                        <th scope="row">{{ $nomor++ }}</th>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->nip }}</td>
                         <td>{{ $data->jenis_kelamin }}</td>

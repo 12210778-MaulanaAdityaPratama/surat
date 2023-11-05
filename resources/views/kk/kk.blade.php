@@ -29,9 +29,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $nomor = 1 @endphp
                     @foreach($kk as $data)
                     <tr>
-                        <th scope="row">{{ $data->id }}</th>
+                        <th scope="row">{{ $nomor++ }}</th>
                         <td>{{ $data->no_kk }}</td>
                         <td>{{ $data->kepala_keluarga }}</td>
                         <td>{{ $data->alamat }}</td>

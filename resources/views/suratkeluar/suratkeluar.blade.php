@@ -22,9 +22,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $nomor = 1 @endphp
                     @foreach($suratkeluar as $data)
                     <tr>
-                        <th scope="row">{{ $data->id }}</th>
+                        <th scope="row">{{ $nomor++ }}</th>
                         <td>{{ $data->pengelola }}</td>
                         <td>{{ $data->perihal }}</td>
                         <td>{{ $data->tanggal_surat }}</td>
