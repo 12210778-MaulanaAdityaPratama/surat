@@ -14,6 +14,49 @@ class KenaikanController extends Controller
     public function tambah() {
         return view('kenaikan.tambah');
     }
+    public function edit($id) {
+        // Mengambil data yang ingin diubah berdasarkan ID
+        $kenaikan = KenaikanModel::find($id);
+    
+        // Jika data tidak ditemukan, Anda bisa menangani kasus ini sesuai kebutuhan
+        if (!$kenaikan) {
+            return redirect('/kenaikan')->with('error', 'Data tidak ditemukan.');
+        }
+    
+        return view('kenaikan.edit', ['kenaikan' => $kenaikan]);
+    }
+    
+    public function update(Request $request, $id) {
+        // Validasi data yang dikirimkan dari formulir
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'nip' => 'required',
+            'pangkat' => 'required',
+            'tmt_golongan' => 'required|date',
+            'gaji_pokok' => 'required',
+            'pangkat_sekarang' => 'required|date',
+            'pangkat_datang' => 'required|date',
+            'gaji_sekarang' => 'required',
+            'gaji_datang' => 'required',
+            'keterangan' => 'required',
+        ]);
+    
+        // Mengambil data yang ingin diubah berdasarkan ID
+        $kenaikan = KenaikanModel::find($id);
+    
+        // Jika data tidak ditemukan, Anda bisa menangani kasus ini sesuai kebutuhan
+        if (!$kenaikan) {
+            return redirect('/kenaikan')->with('error', 'Data tidak ditemukan.');
+        }
+    
+        // Memperbarui data dalam database menggunakan data yang telah divalidasi
+        $kenaikan->update($validatedData);
+    
+        // Redirect pengguna ke halaman yang sesuai
+        return redirect('/kenaikan')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    
     public function store(Request $request)
     {
         // Validasi data yang dikirimkan dari formulir
@@ -35,5 +78,18 @@ class KenaikanController extends Controller
     
         // Redirect pengguna ke halaman yang sesuai
         return redirect('/kenaikan')->with('success', 'Data berhasil disimpan.');
+    }
+    public function destroy($id) {
+        // Cari data yang ingin dihapus berdasarkan ID
+        $kenaikan = KenaikanModel::find($id);
+    
+        if (!$kenaikan) {
+            return redirect('/kenaikan')->with('error', 'Data tidak ditemukan.');
+        }
+    
+        // Hapus data
+        $kenaikan->delete();
+    
+        return redirect('/kenaikan')->with('success', 'Data berhasil dihapus.');
     }
 }

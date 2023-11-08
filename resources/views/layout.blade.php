@@ -200,6 +200,11 @@
             <!-- Sale & Revenue End -->
             <main>
                 <div class="container">
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                     @yield('content')
                 </div>
             </main>
@@ -219,6 +224,7 @@
                     </div>
                 </div>
             </div>
+           
             <!-- Footer End -->
         </div>
         <!-- Content End -->

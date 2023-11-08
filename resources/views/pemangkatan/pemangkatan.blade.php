@@ -40,7 +40,19 @@
                         <td>{{ $data->tanggal_lahir }}</td>
                         <td>{{ $data->catatan }}</td>
                         <td>{{ $data->keterangan }}</td>
-                    </tr>
+                        <td>
+                            <a href="{{ route('pemangkatan.edit', $data->id) }}" class="btn btn-primary">
+                                <i class="fa fa-home me-2">Edit</i>
+                            </a>
+                        </td>         
+                        <td>
+                            <form action="{{ route('pemangkatan.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+
+                            </form>
+                        </td>                    </tr>
                     @endforeach
                   
                   

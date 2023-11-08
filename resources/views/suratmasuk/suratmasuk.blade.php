@@ -32,11 +32,25 @@
                         <td>{{ $data->no_surat }}</td>
                         <td>{{ $data->perihal }}</td>
                         <td>{{ $data->keterangan }}</td>
-                    </tr>
+                        <td>
+                            <a href="{{ route('suratmasuk.edit', $data->id) }}" class="btn btn-primary">
+                                <i class="fa fa-home me-2">Edit</i>
+                            </a>
+                        </td>            
+                        <td>
+                            <form action="{{ route('suratmasuk.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+
+                            </form>
+                        </td>                   
+                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 @endsection

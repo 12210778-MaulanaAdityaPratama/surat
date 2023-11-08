@@ -40,6 +40,24 @@
                         <td>{{ $data->gaji_sekarang }}</td>
                         <td>{{ $data->gaji_datang }}</td>
                         <td>{{ $data->keterangan }}</td>
+                        <td>
+                            <a href="{{ route('kenaikan.edit', $data->id) }}" class="btn btn-primary ">
+                                <i class="fa fa-home me-2">Edit</i>
+                            </a>
+                        </td>
+                        
+                        <td>
+                            <form action="{{ route('kenaikan.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                {{-- <button type="submit" class="btn btn-danger m-2">
+                                    <i class="fa fa-trash me-2"></i>
+                                </button> --}}
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+                            </form>
+
+                        </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>
@@ -47,4 +65,5 @@
         </div>
     </div>
 </div>
+
 @endsection

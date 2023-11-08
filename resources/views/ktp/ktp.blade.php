@@ -46,7 +46,20 @@
                         <td>{{ $data->tgl_pendaftaran }}</td>
                         <td>{{ $data->status_pengambilan }}</td>
                         <td>{{ $data->catatan }}</td>
-                    </tr>
+                        <td>
+                            <a href="{{ route('ktp.edit', $data->id) }}" class="btn btn-primary">
+                                <i class="fa fa-home me-2">Edit</i>
+                            </a>
+                        </td>                        
+                        <td>
+                            <form action="{{ route('ktp.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+
+                            </form>
+                        </td>                   
+                     </tr>
                     @endforeach
                   
                    
@@ -55,5 +68,4 @@
         </div>
     </div>
 </div>
-
 @endsection

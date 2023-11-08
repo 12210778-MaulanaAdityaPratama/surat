@@ -46,6 +46,18 @@
                         <td>{{ $data->jumlah_anggota }}</td>
                         <td>{{ $data->status_kk }}</td>
                         <td>{{ $data->catatan }}</td>
+                        <td>
+                            <a href="{{ route('kk.edit', $data->id) }}" class="btn btn-primary">
+                                <i class="fa fa-home me-2">Edit</i>
+                            </a>
+                        </td>  
+                        <td>
+                            <form action="{{ route('kk.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                    
@@ -55,6 +67,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

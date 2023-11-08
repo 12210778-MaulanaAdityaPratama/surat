@@ -34,10 +34,20 @@
                         <td>{{ $data->divisi }}</td>
                         <td>{{ $data->jabatan }}</td>
                         <td>{{ $data->foto }}</td>
-                    </tr>
+                        <td>
+                            <a href="{{ route('pegawai.edit', $data->id) }}" class="btn btn-primary">
+                                <i class="fa fa-home ">Edit</i>
+                            </a>
+                        </td>                     
+                        <td>
+                            <form action="{{ route('pegawai.delete', $data->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger delete-button" data-id="{{ $data->id }}">Hapus</button>
+                            </form>
+                        </td>                   
+                     </tr>
                     @endforeach
-                   
-                  
                 </tbody>
             </table>
         </div>
