@@ -23,7 +23,8 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required',
             'alamat' => 'required',
             'divisi' => 'required',
-            'jabatan' => 'required'
+            'jabatan' => 'required',
+            'foto' => 'required'
         ]);
     
         // Simpan data ke dalam database menggunakan Eloquent Model

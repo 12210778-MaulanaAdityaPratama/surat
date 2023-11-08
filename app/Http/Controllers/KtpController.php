@@ -30,7 +30,7 @@ class KtpController extends Controller
             'kewarganegaraan' => 'required',
             'tgl_pendaftaran' => 'required|date',
             'status_pengambilan' => 'required',
-            'catatan' => 'required',
+            'catatan' => 'required'
         ]);
     
         // Simpan data ke dalam database menggunakan Eloquent Model
