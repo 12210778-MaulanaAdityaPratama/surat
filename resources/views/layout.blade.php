@@ -128,24 +128,17 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notificatin</span>
+                            <span id="notification-indicator" class="d-none d-lg-inline-flex">Notification</span>
                         </a>
+                        
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
+                            @foreach($notifications as $notification)
+                                <a href="#" class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">{{ $notification->judul }}</h6>
+                                    <small>{{ $notification->pesan }}</small>
+                                </a>
+                                <hr class="dropdown-divider">
+                            @endforeach
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
                     </div>
@@ -173,7 +166,7 @@
                             <i class="fa fa-envelope fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Surat Masuk</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <h6 class="mb-0">{{ $jumlahSuratMasuk }}</h6>
                             </div>
                         </div>
                     </div>
@@ -182,7 +175,7 @@
                             <i class="fa fa-inbox fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Surat Keluar</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <h6 class="mb-0">{{ $jumlahSuratKeluar }}</h6>
                             </div>
                         </div>
                     </div>
@@ -191,7 +184,7 @@
                             <i class="fa fa-user fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total Pegawai</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <h6 class="mb-0">{{ $jumlahPegawai }}</h6>
                             </div>
                         </div>
                     </div>
@@ -244,6 +237,34 @@
     <script src="{{ asset('lib/tempusdominus/js/moment.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk memeriksa notifikasi baru
+            function checkNewNotifications() {
+                $.ajax({
+                    url: '/check-notifications', // Ganti dengan URL yang sesuai di server Anda
+                    type: 'GET',
+                    success: function(response) {
+                        // Jika ada notifikasi baru, tampilkan indikator
+                        if (response.newNotifications) {
+                            $('#notification-indicator').show();
+                        } else {
+                            $('#notification-indicator').hide();
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error checking notifications:', error);
+                    }
+                });
+            }
+    
+            // Panggil fungsi saat dropdown notifikasi dibuka
+            $('.dropdown-toggle').on('click', function() {
+                checkNewNotifications();
+            });
+        });
+    </script>
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>

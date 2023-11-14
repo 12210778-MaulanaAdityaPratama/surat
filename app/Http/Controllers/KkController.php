@@ -4,17 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\KkModel;
 use Illuminate\Http\Request;
+use App\Models\SuratMasukModel;
+use App\Models\SuratKeluarModel;
+use App\Models\PegawaiModel;
 
 class KkController extends Controller
 {
     public function index() {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         $kk = KkModel::all();
-        return view('kk/kk', ['kk' => $kk]);
+        return view('kk/kk', ['kk' => $kk],compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function tambah() {
-        return view('kk.tambah');
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
+        return view('kk.tambah', compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function edit($id) {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         // Mengambil data yang ingin diubah berdasarkan ID
         $kk = KkModel::find($id);
     
@@ -23,7 +35,7 @@ class KkController extends Controller
             return redirect('/kk')->with('error', 'Data tidak ditemukan.');
         }
     
-        return view('kk.edit', ['kk' => $kk]);
+        return view('kk.edit', ['kk' => $kk],compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     
     public function update(Request $request, $id) {

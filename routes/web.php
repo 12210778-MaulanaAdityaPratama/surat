@@ -83,6 +83,9 @@ Route::get('/pegawai/{id}/edit', 'App\Http\Controllers\PegawaiController@edit')-
 Route::put('/pegawai/{id}/update', 'App\Http\Controllers\PegawaiController@update')->name('pegawai.update');
 Route::delete('/pegawai/{id}/delete', 'App\Http\Controllers\PegawaiController@destroy')->name('pegawai.delete');
 
+Route::get('/layout', 'App\Http\Controllers\LayoutController@index');
+Route::get('/check-notifications', 'LayoutController@checkNotifications');
+
 
 
 

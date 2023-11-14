@@ -4,18 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\SuratKeluarModel;
 use Illuminate\Http\Request;
+use App\Models\SuratMasukModel;
+use App\Models\PegawaiModel;
 
 class SuratKeluarController extends Controller
 {
     public function index() {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         $suratkeluar = SuratKeluarModel::all();
-        return view('suratkeluar/suratkeluar', ['suratkeluar' => $suratkeluar]);
+        return view('suratkeluar/suratkeluar', ['suratkeluar' => $suratkeluar],  compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function tambah() {
-        return view('suratkeluar.tambah');
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
+        return view('suratkeluar.tambah', compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
 
     public function edit($id) {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         // Mengambil data yang ingin diubah berdasarkan ID
         $suratkeluar = SuratKeluarModel::find($id);
     
@@ -24,7 +35,7 @@ class SuratKeluarController extends Controller
             return redirect('/suratkeluar')->with('error', 'Data tidak ditemukan.');
         }
     
-        return view('suratkeluar.edit', ['suratkeluar' => $suratkeluar]);
+        return view('suratkeluar.edit', ['suratkeluar' => $suratkeluar], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     
     public function update(Request $request, $id) {

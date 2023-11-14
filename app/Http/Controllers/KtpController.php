@@ -4,18 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\KtpModel;
 use Illuminate\Http\Request;
+use App\Models\SuratMasukModel;
+use App\Models\SuratKeluarModel;
+use App\Models\PegawaiModel;
 
 class KtpController extends Controller
 {
     public function index() {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         $ktp = KtpModel::all();
-        return view('ktp/ktp', ['ktp' => $ktp]);
+        return view('ktp/ktp', ['ktp' => $ktp], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function tambah (){
-        return view('ktp.tambah');
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
+        return view('ktp.tambah', compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
 
     public function edit($id) {
+        $jumlahSuratMasuk = SuratMasukModel::count();
+        $jumlahSuratKeluar = SuratKeluarModel::count();
+        $jumlahPegawai = PegawaiModel::count();
         // Mengambil data yang ingin diubah berdasarkan ID
         $ktp = KtpModel::find($id);
     
@@ -24,7 +36,7 @@ class KtpController extends Controller
             return redirect('/ktp')->with('error', 'Data tidak ditemukan.');
         }
     
-        return view('ktp.edit', ['ktp' => $ktp]);
+        return view('ktp.edit', ['ktp' => $ktp], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     
     public function update(Request $request, $id) {
