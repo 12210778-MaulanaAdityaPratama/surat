@@ -10,13 +10,33 @@ use App\Models\PegawaiModel;
 
 class KkController extends Controller
 {
-    public function index() {
+    public function index( Request $request) {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
         $kk = KkModel::all();
+        $query = $request->input('search');
+        $kk = KkModel::when($query, function ($q) use ($query) {
+            return $q->where('kepala_keluarga', 'LIKE', '%' . $query . '%');
+            // Tambahkan kolom lain yang ingin Anda cari di sini
+        })->get();
         return view('kk/kk', ['kk' => $kk],compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
+    public function search(Request $request)
+{
+    // Validasi data yang dikirimkan dari formulir
+    $request->validate([
+        'keyword' => 'required|string|max:255',
+    ]);
+
+    // Lakukan pencarian berdasarkan kata kunci
+    $keyword = $request->input('keyword');
+    $kk = KkModel::where('kepala_keluarga', 'like', '%' . $keyword . '%')
+        ->get();
+
+    // Kembalikan hasil pencarian dalam bentuk tampilan parsial
+    return view('kk.search', compact('kk'));
+}
     public function tambah() {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();

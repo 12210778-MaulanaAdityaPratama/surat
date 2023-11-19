@@ -10,13 +10,35 @@ use App\Models\PegawaiModel;
 
 class KenaikanController extends Controller
 {
-    public function index() {
+    public function index( Request $request) {
         $kenaikan = KenaikanModel::all();
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
+        $query = $request->input('search');
+        $kenaikan = KenaikanModel::when($query, function ($q) use ($query) {
+            return $q->where('nama', 'LIKE', '%' . $query . '%')
+                     ->orWhere('nip', 'LIKE', '%' . $query . '%');
+            // Tambahkan kolom lain yang ingin Anda cari di sini
+        })->get();
         return view('kenaikan/kenaikan', ['kenaikan' => $kenaikan], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
+    public function search(Request $request)
+{
+    // Validasi data yang dikirimkan dari formulir
+    $request->validate([
+        'keyword' => 'required|string|max:255',
+    ]);
+
+    // Lakukan pencarian berdasarkan kata kunci
+    $keyword = $request->input('keyword');
+    $suratkeluar = SuratKeluarModel::where('nama', 'like', '%' . $keyword . '%')
+        ->orWhere('nip', 'like', '%' . $keyword . '%')
+        ->get();
+
+    // Kembalikan hasil pencarian dalam bentuk tampilan parsial
+    return view('kenaikan.search', compact('kenaikan'));
+}
     public function tambah() {
         $kenaikan = KenaikanModel::all();
         $jumlahSuratMasuk = SuratMasukModel::count();

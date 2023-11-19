@@ -10,13 +10,35 @@ use App\Models\PegawaiModel;
 
 class PemangkatanController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
         $pemangkatan = PemangkatanModel::all();
+        $query = $request->input('search');
+        $pemangkatan = PemangkatanModel::when($query, function ($q) use ($query) {
+            return $q->where('nama', 'LIKE', '%' . $query . '%')
+                     ->orWhere('nip', 'LIKE', '%' . $query . '%');
+            // Tambahkan kolom lain yang ingin Anda cari di sini
+        })->get();
         return view('pemangkatan/pemangkatan', ['pemangkatan' => $pemangkatan], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
+    public function search(Request $request)
+{
+    // Validasi data yang dikirimkan dari formulir
+    $request->validate([
+        'keyword' => 'required|string|max:255',
+    ]);
+
+    // Lakukan pencarian berdasarkan kata kunci
+    $keyword = $request->input('keyword');
+    $pemangkatan = PemangkatanModel::where('nama', 'like', '%' . $keyword . '%')
+        ->orWhere('nip', 'like', '%' . $keyword . '%')
+        ->get();
+
+    // Kembalikan hasil pencarian dalam bentuk tampilan parsial
+    return view('pemangkatan.search', compact('pemangkatan'));
+}
     public function tambah() {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();

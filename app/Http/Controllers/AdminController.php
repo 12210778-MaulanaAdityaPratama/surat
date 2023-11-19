@@ -9,10 +9,16 @@ use App\Models\PegawaiModel;
 
 class AdminController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
-     return view('index', compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
+        $namapegawai = PegawaiModel::pluck('nama');
+        $nippegawai = PegawaiModel::pluck('nip');
+        $divisi = PegawaiModel::pluck('divisi');
+        $jabatan = PegawaiModel::pluck('jabatan');
+        $foto = PegawaiModel::pluck('foto');
+    
+        return view('index', compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai','namapegawai','nippegawai','divisi','jabatan','foto'));
     }
 }

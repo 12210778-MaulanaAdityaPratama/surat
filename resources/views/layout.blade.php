@@ -27,6 +27,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/number.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" integrity="sha512-MMEK6jLlO9jDAxQ+1z9/ZvCXU+suo+ekFQyheuAdCr5npvym9DwY6l2Uk6RSvm+gDCOHT+nHHL2jcKVJXIYRGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <!-- Template Stylesheet -->
@@ -121,9 +122,6 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -237,7 +235,7 @@
     <script src="{{ asset('lib/tempusdominus/js/moment.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             // Fungsi untuk memeriksa notifikasi baru
@@ -265,9 +263,10 @@
             });
         });
     </script>
-
+    <script src="{{ asset('js/search.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-X5okQH8BZzIYh5yvzvwwUs62Q/YjdbnqM0l1KJ6+JtKu7h4aDSvihIEqpx6vR1PiZtdMWM8UNcDz3syc3V5b3A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

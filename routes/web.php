@@ -30,6 +30,7 @@ Route::post('/suratmasuk/store', 'App\Http\Controllers\SuratMasukController@stor
 Route::get('/suratmasuk/{id}/edit', 'App\Http\Controllers\SuratMasukController@edit')->name('suratmasuk.edit');
 Route::put('/suratmasuk/{id}/update', 'App\Http\Controllers\SuratMasukController@update')->name('suratmasuk.update');
 Route::delete('/suratmasuk/{id}/delete', 'App\Http\Controllers\SuratMasukController@destroy')->name('suratmasuk.delete');
+// Route::get('/suratmasuk/search', 'App\Http\Controllers\SuratMasukController@search')->name('suratmasuk.search');
 
 
 Route::get('/suratkeluar', 'App\Http\Controllers\SuratKeluarController@index');

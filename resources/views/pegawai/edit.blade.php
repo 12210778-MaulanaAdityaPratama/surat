@@ -9,7 +9,7 @@
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Edit Data Pegawai</h6>
-                <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" enctype="multipart/form-kenaikan">
+                <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                     <div class="mb-3">
@@ -40,8 +40,8 @@
                         <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{$pegawai->jabatan}}">
                     </div>
                     <div class="mb-3">
-                        <label for="foto" class="form-label">Foto</label>
-                        <input type="text" class="form-control" id="foto" name="foto" value="{{$pegawai->foto}}">
+                        <label for="foto" class="form-label">Foto:</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Data Pegawai</button>
                 </form>

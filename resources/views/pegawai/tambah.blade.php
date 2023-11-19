@@ -40,7 +40,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="foto" class="form-label">Foto</label>
-                        <input type="text" class="form-control" id="foto" name="foto">
+                        <input type="file" name="foto" accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Data Pegawai</button>
                 </form>

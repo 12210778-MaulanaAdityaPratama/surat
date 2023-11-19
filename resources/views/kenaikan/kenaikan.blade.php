@@ -7,6 +7,13 @@
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
         <h6 class="mb-4">Responsive Table</h6>
+        <form action="{{ url('/kenaikan') }}" method="GET">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari...">
+                <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                <a href="/kenaikan" class="btn btn-danger" role="button">X</a>
+            </div>
+        </form>
         <a href="{{ route('kenaikan.tambah_data') }}" class="btn btn-primary">Tambah Data</a>
         <div class="table-responsive">
             <table class="table">

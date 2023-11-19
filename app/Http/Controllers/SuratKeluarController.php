@@ -9,13 +9,35 @@ use App\Models\PegawaiModel;
 
 class SuratKeluarController extends Controller
 {
-    public function index() {
+    public function index( Request $request) {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
         $suratkeluar = SuratKeluarModel::all();
+        $query = $request->input('search');
+        $suratkeluar = SuratKeluarModel::when($query, function ($q) use ($query) {
+            return $q->where('pengelola', 'LIKE', '%' . $query . '%')
+                     ->orWhere('no_surat', 'LIKE', '%' . $query . '%');
+            // Tambahkan kolom lain yang ingin Anda cari di sini
+        })->get();
         return view('suratkeluar/suratkeluar', ['suratkeluar' => $suratkeluar],  compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
+    public function search(Request $request)
+{
+    // Validasi data yang dikirimkan dari formulir
+    $request->validate([
+        'keyword' => 'required|string|max:255',
+    ]);
+
+    // Lakukan pencarian berdasarkan kata kunci
+    $keyword = $request->input('keyword');
+    $suratkeluar = SuratKeluarModel::where('pengelola', 'like', '%' . $keyword . '%')
+        ->orWhere('no_surat', 'like', '%' . $keyword . '%')
+        ->get();
+
+    // Kembalikan hasil pencarian dalam bentuk tampilan parsial
+    return view('suratkeluar.search', compact('suratkeluar'));
+}
     public function tambah() {
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
