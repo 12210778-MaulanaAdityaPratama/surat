@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SuratKeluarEvent;
 use App\Models\SuratKeluarModel;
 use Illuminate\Http\Request;
 use App\Models\SuratMasukModel;
 use App\Models\PegawaiModel;
+use App\Models\SuratKeluarNotifikasi;
+use Carbon\Carbon;
+
 
 class SuratKeluarController extends Controller
 {
@@ -78,9 +82,46 @@ class SuratKeluarController extends Controller
         if (!$suratkeluar) {
             return redirect('/suratkeluar')->with('error', 'Data tidak ditemukan.');
         }
-    
-        // Memperbarui data dalam database menggunakan data yang telah divalidasi
+          // Memperbarui data dalam database menggunakan data yang telah divalidasi
+          $suratkeluar->update($validatedData);
+         // Simpan nomor surat sebelum diubah
+         $nomorSuratSebelum = $suratkeluar->no_surat;
+         $tanggalSebelum = $suratkeluar->tanggal_surat;
+
+          // Memperbarui data dalam database menggunakan data yang telah divalidasi
         $suratkeluar->update($validatedData);
+        // Simpan nomor surat setelah diubah
+        $nomorSuratSesudah = $suratkeluar->no_surat;
+        $tanggalSuratSesudah = $suratkeluar->tanggal_surat;
+         // Jika nomor surat berubah, update juga notifikasi yang terkait
+    if ($nomorSuratSebelum !== $nomorSuratSesudah) {
+        $tanggal = Carbon::parse($suratkeluar->tanggal_surat)->format('d-m-Y');
+
+        // Cari notifikasi terkait berdasarkan surat masuk ID
+        $notifikasi = SuratKeluarNotifikasi::where('surat_keluar_id', $id)->first();
+
+        if ($notifikasi) {
+            // Perbarui pesan notifikasi
+            $notifikasi->update([
+                'pesan' => 'Anda telah mengeluarkan surat dengan nomor ' . $suratkeluar->no_surat . ' ' . 'pada tanggal surat ' . $tanggal,
+            ]);
+        }
+    }
+    if ($tanggalSebelum !== $tanggalSuratSesudah) {
+        $tanggal = Carbon::parse($suratkeluar->tanggal_surat)->format('d-m-Y');
+
+        // Cari notifikasi terkait berdasarkan surat masuk ID
+        $notifikasi = SuratKeluarNotifikasi::where('surat_keluar_id', $id)->first();
+
+        if ($notifikasi) {
+            // Perbarui pesan notifikasi
+            $notifikasi->update([
+                'pesan' => 'Anda telah mengeluarkan surat dengan nomor ' . $suratkeluar->no_surat . ' ' . 'pada tanggal surat ' . $tanggal,
+            ]);
+        }
+    }
+        
+      
     
         // Redirect pengguna ke halaman yang sesuai
         return redirect('/suratkeluar')->with('success', 'Data berhasil diperbarui.');
@@ -98,8 +139,17 @@ class SuratKeluarController extends Controller
         ]);
     
         // Simpan data ke dalam database menggunakan Eloquent Model
-        SuratKeluarModel::create($validatedData);
-    
+        $suratkeluar = SuratKeluarModel::create($validatedData);
+        $tanggal = Carbon::parse($suratkeluar->tanggal_surat)->format('d-m-Y');
+    // Buat notifikasi terkait
+    $notifikasi = new SuratKeluarNotifikasi([
+        'surat_keluar_id' => $suratkeluar->id,
+        'judul' => 'Surat Keluar Baru',
+        'pesan' => 'Anda telah mengeluarkan surat dengan nomor ' . $suratkeluar->no_surat . ' '  .'pada tanggal surat '. $tanggal,
+        'tanggal' => now(),
+    ]);
+        $notifikasi->save();
+        event(new SuratKeluarEvent($suratkeluar));
         // Redirect pengguna ke halaman yang sesuai
         return redirect('/suratkeluar')->with('success', 'Data berhasil disimpan.');
     }

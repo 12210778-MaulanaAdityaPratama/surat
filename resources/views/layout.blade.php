@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -52,7 +53,23 @@
           }
         }
       </style>
-      
+      <style>
+        .clock {
+        position: absolute;
+        color: #030303; /* Warna jam */
+        font-size: 15px;
+        font-family: 'Orbitron', sans-serif; /* Gunakan jenis font 'Orbitron' jika tersedia, atau ganti dengan font futuristik lainnya */
+        letter-spacing: 7px;
+        text-shadow: 2px 2px 5px rgba(187, 19, 19, 0.5); /* Efek bayangan teks */
+        transition: color 0.5s ease-in-out; /* Animasi perubahan warna */
+    }
+    @media (max-width: 50%) {
+        .clock {
+            font-size: 3px; /* Sesuaikan ukuran jam untuk layar kecil */
+            letter-spacing: 4px;
+        }
+    }
+      </style>
 </head>
 
 <body>
@@ -78,7 +95,9 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
+                        @if(Auth::check())
+                        <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+                        @endif
                         <span>Admin</span>
                     </div>
                 </div>
@@ -116,12 +135,16 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="/admin" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
+                
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
+                </div>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -139,18 +162,25 @@
                             @endforeach
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
+                        
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="{{ asset('img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            @if(Auth::check())
+                            <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
+        @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            @if(Auth::check())
+                            <a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
+                            @endif
+
                         </div>
                     </div>
+                    
                 </div>
             </nav>
             <!-- Navbar End -->
@@ -204,13 +234,7 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            &copy; <a href="#">Kecamatan Rasau Jaya</a>, All Right Reserved. 
                         </div>
                     </div>
                 </div>
@@ -263,6 +287,40 @@
             });
         });
     </script>
+    <script>
+       function showTime(){
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+    
+}
+
+showTime();
+        </script>
+        
+    
+    
     <script src="{{ asset('js/search.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>

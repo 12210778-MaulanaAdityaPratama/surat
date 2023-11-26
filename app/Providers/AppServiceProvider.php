@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\NotifikasiModel;
+use App\Models\SuratKeluarNotifikasi;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,8 +23,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layout', function ($view) {
-            $notifications = NotifikasiModel::latest()->take(5)->get();
-            $view->with('notifications', $notifications);
+            $suratMasukNotifications = NotifikasiModel::where('dibaca', false)->latest()->take(3)->get();
+            $suratKeluarNotifications = SuratKeluarNotifikasi::where('dibaca', false)->latest()->take(3)->get();
+        
+            $notifications = $suratMasukNotifications->merge($suratKeluarNotifications);
+        
+            $badgeCount = $notifications->count(); // Jumlah notifikasi belum dibaca
+        
+            $view->with('notifications', $notifications)->with('badgeCount', $badgeCount);
         });
     }
 }

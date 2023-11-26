@@ -34,8 +34,25 @@
                         </div>
                     @endforeach
                 </div>
+                
+            </div>
+            
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="mb-4"></div>
+            <div class="bg-light rounded h-100 p-4">
+                <iframe class="position-relative rounded w-100"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255345.90222422613!2d109.18176435547423!3d-0.2520254073263721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d47b164503aa9%3A0x2d0217a23017a2b9!2sKec.%20Rasau%20Jaya%2C%20Kabupaten%20Kubu%20Raya%2C%20Kalimantan%20Barat!5e0!3m2!1sid!2sid!4v1701021291694!5m2!1sid!2sid"
+                    frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"
+                    width="100%" height="300"></iframe>
             </div>
         </div>
+        
+        <div class="mb-4"></div>
+
+        
     </div>
+    
 </div>
+
 @endsection

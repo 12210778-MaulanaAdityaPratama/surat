@@ -4,23 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-class NotifikasiModel extends Model
+
+class SuratKeluarNotifikasi extends Model
 {
     use HasFactory;
-    use Notifiable;
-    protected $table = 'notifikasi';
+    protected $table = 'surat_keluar_notifikasi';
     // field apa saja yang bisa di isi
     protected $fillable = [
-        'surat_masuk_id',
+        'surat_keluar_id',
         'judul',
         'pesan',
         'tanggal',
         'dibaca'
     ];
-    public function suratMasuk()
+    public function suratKeluar()
     {
-        return $this->belongsTo(SuratMasukModel::class, 'surat_masuk_id');
+        return $this->belongsTo(SuratKeluarModel::class, 'surat_keluar_id');
     }
 
 }
