@@ -38,7 +38,7 @@
             </div>
             
         </div>
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-30">
             <div class="mb-4"></div>
             <div class="bg-light rounded h-100 p-4">
                 <iframe class="position-relative rounded w-100"

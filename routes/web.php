@@ -92,6 +92,11 @@ Route::get('/check-notifications', 'App\Http\Controllers\LayoutController@checkN
 Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login');
 Route::post('/login', 'App\Http\Controllers\LoginController@login');
 Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
+Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
+Route::get('/profile/{id}/edit', 'App\Http\Controllers\ProfileController@edit')->name('profile.edit')->middleware('LoginMiddleware');
+Route::put('/profile/{id}/update', 'App\Http\Controllers\ProfileController@update')->name('profile.update')->middleware('LoginMiddleware');
+
+
 
 
 
