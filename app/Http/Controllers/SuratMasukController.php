@@ -17,13 +17,12 @@ class SuratMasukController extends Controller
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
-        $suratmasuk = SuratMasukModel::all();
         $query = $request->input('search');
         $suratmasuk = SuratMasukModel::when($query, function ($q) use ($query) {
             return $q->where('no_surat', 'LIKE', '%' . $query . '%')
                      ->orWhere('asal_surat', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         return view('suratmasuk/suratmasuk', ['suratmasuk' => $suratmasuk], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function search(Request $request)

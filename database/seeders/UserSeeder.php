@@ -15,10 +15,10 @@ class UserSeeder extends Seeder
     {
         // Tambahkan logic seeding di sini
         User::create([
-            'name' => 'Bontot Wawan Kurniawanto',
-            'nip' => '11111111',
-            'email' => 'bontot@gmail.com',
-            'password' => bcrypt('bontot'), // Pastikan password sudah di-hash
+            'name' => 'aditya',
+            'nip' => '12210778',
+            'email' => 'aditya.neo5@gmail.com',
+            'password' => bcrypt('aditya'), // Pastikan password sudah di-hash
             'role' => 'admin',
             'foto' => '',
         ]);

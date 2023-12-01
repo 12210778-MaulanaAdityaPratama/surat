@@ -14,12 +14,11 @@ class KtpController extends Controller
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
-        $ktp = KtpModel::all();
         $query = $request->input('search');
         $ktp = KtpModel::when($query, function ($q) use ($query) {
             return $q->where('nama', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         return view('ktp/ktp', ['ktp' => $ktp], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function search(Request $request)

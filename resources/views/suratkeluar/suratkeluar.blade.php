@@ -4,12 +4,13 @@
 
 @section('content')
 <br>
+
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
-        <h6 class="mb-4">Responsive Table</h6>
+        <h6 class="mb-4">Surat Keluar Table</h6>
         <form action="{{ url('/suratkeluar') }}" method="GET">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari...">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari berdasarkan pengelola atau no surat">
                 <button class="btn btn-outline-secondary" type="submit">Cari</button>
                 <a href="/suratkeluar" class="btn btn-danger" role="button">X</a>
             </div>
@@ -29,10 +30,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $nomor = 1 @endphp
                     @foreach($suratkeluar as $data)
                     <tr>
-                        <th scope="row">{{ $nomor++ }}</th>
+                        <td>{{ $suratkeluar->firstItem() + $loop->index }}</td>
                         <td>{{ $data->pengelola }}</td>
                         <td>{{ $data->perihal }}</td>
                         <td>{{ $data->tanggal_surat }}</td>
@@ -55,6 +55,23 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="pagination-container">
+            @if ($suratkeluar->lastPage() > 1)
+                <ul class="pagination">
+                    <li class="{{ ($suratkeluar->currentPage() == 1) ? ' disabled' : '' }}">
+                        <a href="{{ $suratkeluar->url(1) }}">First</a>
+                    </li>
+                    @for ($i = 1; $i <= $suratkeluar->lastPage(); $i++)
+                        <li class="{{ ($suratkeluar->currentPage() == $i) ? ' active' : '' }}">
+                            <a href="{{ $suratkeluar->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <li class="{{ ($suratkeluar->currentPage() == $suratkeluar->lastPage()) ? ' disabled' : '' }}">
+                        <a href="{{ $suratkeluar->url($suratkeluar->lastPage()) }}">Last</a>
+                    </li>
+                </ul>
+            @endif
         </div>
     </div>
 </div>

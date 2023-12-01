@@ -6,10 +6,10 @@
 <br>
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
-        <h6 class="mb-4">Responsive Table</h6>
+        <h6 class="mb-4">Kenaikan Table</h6>
         <form action="{{ url('/kenaikan') }}" method="GET">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari...">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari berdasarkan nama atau nip">
                 <button class="btn btn-outline-secondary" type="submit">Cari</button>
                 <a href="/kenaikan" class="btn btn-danger" role="button">X</a>
             </div>
@@ -33,19 +33,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $nomor = 1 @endphp
                     @foreach($kenaikan as $data)
                     <tr>
-                        <th scope="row">{{ $nomor++ }}</th>
+                        <td>{{ $kenaikan->firstItem() + $loop->index }}</td>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->nip }}</td>
                         <td>{{ $data->pangkat }}</td>
                         <td>{{ $data->tmt_golongan }}</td>
-                        <td>{{ $data->gaji_pokok }}</td>
+                        <td>Rp.{{ $data->gaji_pokok }}</td>
                         <td>{{ $data->pangkat_sekarang }}</td>
                         <td>{{ $data->pangkat_datang }}</td>
-                        <td>{{ $data->gaji_sekarang }}</td>
-                        <td>{{ $data->gaji_datang }}</td>
+                        <td>Rp.{{ $data->gaji_sekarang }}</td>
+                        <td>Rp.{{ $data->gaji_datang }}</td>
                         <td>{{ $data->keterangan }}</td>
                         <td>
                             <a href="{{ route('kenaikan.edit', $data->id) }}" class="btn btn-primary ">
@@ -69,6 +68,23 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="pagination-container">
+            @if ($kenaikan->lastPage() > 1)
+                <ul class="pagination">
+                    <li class="{{ ($kenaikan->currentPage() == 1) ? ' disabled' : '' }}">
+                        <a href="{{ $kenaikan->url(1) }}">First</a>
+                    </li>
+                    @for ($i = 1; $i <= $kenaikan->lastPage(); $i++)
+                        <li class="{{ ($kenaikan->currentPage() == $i) ? ' active' : '' }}">
+                            <a href="{{ $kenaikan->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <li class="{{ ($kenaikan->currentPage() == $kenaikan->lastPage()) ? ' disabled' : '' }}">
+                        <a href="{{ $kenaikan->url($kenaikan->lastPage()) }}">Last</a>
+                    </li>
+                </ul>
+            @endif
         </div>
     </div>
 </div>

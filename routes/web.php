@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Http\Middleware\LoginMiddleware;
+use App\Http\Controllers\ForgetController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,7 @@ use App\Http\Middleware\LoginMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/admin', 'App\Http\Controllers\AdminController@index')->middleware('LoginMiddleware');
 
 // Route::get('suratmasuk', function () {
@@ -90,14 +93,11 @@ Route::get('/layout', 'App\Http\Controllers\LayoutController@index')->middleware
 Route::get('/check-notifications', 'App\Http\Controllers\LayoutController@checkNotifications')->middleware('LoginMiddleware');
 
 Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login');
-Route::post('/login', 'App\Http\Controllers\LoginController@login');
+Route::post('/login', 'App\Http\Controllers\LoginController@login')->name('login');
 Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
-Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
+Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->name('profile')->middleware('LoginMiddleware');
 Route::get('/profile/{id}/edit', 'App\Http\Controllers\ProfileController@edit')->name('profile.edit')->middleware('LoginMiddleware');
 Route::put('/profile/{id}/update', 'App\Http\Controllers\ProfileController@update')->name('profile.update')->middleware('LoginMiddleware');
-
-
-
 
 
 

@@ -11,16 +11,16 @@ use App\Models\PegawaiModel;
 class KenaikanController extends Controller
 {
     public function index( Request $request) {
-        $kenaikan = KenaikanModel::all();
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
+
         $query = $request->input('search');
         $kenaikan = KenaikanModel::when($query, function ($q) use ($query) {
             return $q->where('nama', 'LIKE', '%' . $query . '%')
                      ->orWhere('nip', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         return view('kenaikan/kenaikan', ['kenaikan' => $kenaikan], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function search(Request $request)

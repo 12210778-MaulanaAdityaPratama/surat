@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\NotifikasiModel;
 use App\Models\SuratKeluarNotifikasi;
 use Illuminate\Support\Facades\View;
-
+use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
             $badgeCount = $notifications->count(); // Jumlah notifikasi belum dibaca
         
             $view->with('notifications', $notifications)->with('badgeCount', $badgeCount);
+            Paginator::useBootstrapFive();
+            Paginator::useBootstrapFour();
         });
     }
 }

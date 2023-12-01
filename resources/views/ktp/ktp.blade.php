@@ -6,10 +6,10 @@
 <br>
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
-        <h6 class="mb-4">Responsive Table</h6>
+        <h6 class="mb-4">Kartu Tanda Penduduk Table</h6>
         <form action="{{ url('/ktp') }}" method="GET">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari...">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari berdasarkan nama">
                 <button class="btn btn-outline-secondary" type="submit">Cari</button>
                 <a href="/ktp" class="btn btn-danger" role="button">X</a>
             </div>
@@ -36,10 +36,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $nomor = 1 @endphp
                     @foreach($ktp as $data)
                     <tr>
-                        <th scope="row">{{ $nomor++ }}</th>
+                        <td>{{ $ktp->firstItem() + $loop->index }}</td>
                         <td>{{ $data->no_ktp }}</td>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->tempat_lahir }}</td>
@@ -72,6 +71,23 @@
                    
                 </tbody>
             </table>
+        </div>
+        <div class="pagination-container">
+            @if ($ktp->lastPage() > 1)
+                <ul class="pagination">
+                    <li class="{{ ($ktp->currentPage() == 1) ? ' disabled' : '' }}">
+                        <a href="{{ $ktp->url(1) }}">First</a>
+                    </li>
+                    @for ($i = 1; $i <= $ktp->lastPage(); $i++)
+                        <li class="{{ ($ktp->currentPage() == $i) ? ' active' : '' }}">
+                            <a href="{{ $ktp->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <li class="{{ ($ktp->currentPage() == $ktp->lastPage()) ? ' disabled' : '' }}">
+                        <a href="{{ $ktp->url($ktp->lastPage()) }}">Last</a>
+                    </li>
+                </ul>
+            @endif
         </div>
     </div>
 </div>

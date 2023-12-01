@@ -14,13 +14,12 @@ class PemangkatanController extends Controller
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
-        $pemangkatan = PemangkatanModel::all();
         $query = $request->input('search');
         $pemangkatan = PemangkatanModel::when($query, function ($q) use ($query) {
             return $q->where('nama', 'LIKE', '%' . $query . '%')
                      ->orWhere('nip', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         return view('pemangkatan/pemangkatan', ['pemangkatan' => $pemangkatan], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function search(Request $request)

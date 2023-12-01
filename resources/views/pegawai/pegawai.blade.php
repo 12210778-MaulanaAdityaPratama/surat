@@ -6,10 +6,10 @@
 <br>
 <div class="col-12">
     <div class="bg-light rounded h-100 p-4">
-        <h6 class="mb-4">Responsive Table</h6>
+        <h6 class="mb-4">Pegawai Table</h6>
         <form action="{{ url('/pegawai') }}" method="GET">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari...">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Cari berdasarkan nama atau nip">
                 <button class="btn btn-outline-secondary" type="submit">Cari</button>
                 <a href="/pegawai" class="btn btn-danger" role="button">X</a>
             </div>
@@ -33,7 +33,7 @@
                     @php $nomor = 1 @endphp
                     @foreach($pegawai as $data)
                     <tr>
-                        <th scope="row">{{ $nomor++ }}</th>
+                        <td>{{ $pegawai->firstItem() + $loop->index }}</td>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->nip }}</td>
                         <td>{{ $data->jenis_kelamin }}</td>
@@ -61,6 +61,23 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="pagination-container">
+            @if ($pegawai->lastPage() > 1)
+                <ul class="pagination">
+                    <li class="{{ ($pegawai->currentPage() == 1) ? ' disabled' : '' }}">
+                        <a href="{{ $pegawai->url(1) }}">First</a>
+                    </li>
+                    @for ($i = 1; $i <= $pegawai->lastPage(); $i++)
+                        <li class="{{ ($pegawai->currentPage() == $i) ? ' active' : '' }}">
+                            <a href="{{ $pegawai->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <li class="{{ ($pegawai->currentPage() == $pegawai->lastPage()) ? ' disabled' : '' }}">
+                        <a href="{{ $pegawai->url($pegawai->lastPage()) }}">Last</a>
+                    </li>
+                </ul>
+            @endif
         </div>
     </div>
 </div>

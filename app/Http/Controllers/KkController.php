@@ -14,12 +14,11 @@ class KkController extends Controller
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
-        $kk = KkModel::all();
         $query = $request->input('search');
         $kk = KkModel::when($query, function ($q) use ($query) {
             return $q->where('kepala_keluarga', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         return view('kk/kk', ['kk' => $kk],compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));
     }
     public function search(Request $request)

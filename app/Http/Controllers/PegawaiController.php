@@ -10,7 +10,6 @@ use App\Models\SuratKeluarModel;
 class PegawaiController extends Controller
 {
     public function index(Request $request) {
-        $pegawai = PegawaiModel::all();
         $jumlahSuratMasuk = SuratMasukModel::count();
         $jumlahSuratKeluar = SuratKeluarModel::count();
         $jumlahPegawai = PegawaiModel::count();
@@ -19,7 +18,7 @@ class PegawaiController extends Controller
             return $q->where('nama', 'LIKE', '%' . $query . '%')
                      ->orWhere('nip', 'LIKE', '%' . $query . '%');
             // Tambahkan kolom lain yang ingin Anda cari di sini
-        })->get();
+        })->paginate(5);
         // Melewatkan data ke AdminController
     // Mengambil data nama
         return view('pegawai/pegawai', ['pegawai' => $pegawai], compact('jumlahSuratMasuk', 'jumlahSuratKeluar', 'jumlahPegawai'));

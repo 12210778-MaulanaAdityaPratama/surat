@@ -70,6 +70,37 @@
         }
     }
       </style>
+   <style>
+    .pagination-container {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    border-radius: 3px;
+}
+
+.pagination .active a {
+    background-color: #007bff;
+    color: #fff;
+}
+
+   </style>
 </head>
 
 <body>
@@ -324,6 +355,7 @@ showTime();
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-X5okQH8BZzIYh5yvzvwwUs62Q/YjdbnqM0l1KJ6+JtKu7h4aDSvihIEqpx6vR1PiZtdMWM8UNcDz3syc3V5b3A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
 </body>
 
 </html>
